@@ -13,99 +13,141 @@ var douglas = (function(){
 		};
 })();
 var account = (function(){
-	var _account_no = 0,_money=0;
+	var _account_no = 0,_money;
+	var setAccountNo = function(account_no) {this._account_no=account_no;};
+	var getAccountNo = function(){return this._account_no;};
+	var setMoney = function(money){this._money=money;};
+	var getMoney = function(){return this._money;};
 		return {
+			setAccountNo : setAccountNo,
+			getAccountNo : getAccountNo,
+			setMoney : setMoney,
+			getMoney : getMoney,
 			init :function() {
 				document.querySelector('#bt_spec_show').addEventListener('click',member.spec,false);
 				document.querySelector('#bt_make_account').addEventListener('click',this.spec,false);
 				document.querySelector('#bt_deposit').addEventListener('click',this.deposit,false);
 				document.querySelector('#bt_withdraw').addEventListener('click',this.withdraw,false);
-			} ,
+			},
 			spec : function() {
-				this.account.account_no = Math.floor(Math.random() * 899999) + 100000;
-				document.querySelector('#result_account').innerHTML=this.account_no;
+				setAccountNo(Math.floor(Math.random() * 899999) + 100000);
+				setMoney(0);
+				document.querySelector('#result_account').innerHTML=getAccountNo();
 			},
 			deposit : function(){
-				var deposit = document.querySelector('#money').value;
-				document.querySelector('#rest_money').innerHTML= deposit;
+				var input_money = Number(document.querySelector('#money').value);
+				var rest_money = getMoney();
+				console.log('인풋 머니 타입 체크 : '+ (typeof input_money === 'number'));
+				console.log('잔액 타입 체크 : '+ (typeof rest_money === 'number'));
+				setMoney(input_money + rest_money);
+				document.querySelector('#rest_money').innerHTML= getMoney();
 			},
 			withdraw :function(){
-				var withdraw = document.querySelector('#money').value; 
-				document.querySelector('#rest_money').innerHTML='-'+withdraw;
+				var input_money = Number(document.querySelector('#money').value);
+				var rest_money = getMoney();
+				setMoney(rest_money - input_money);
+				document.querySelector('#rest_money').innerHTML= getMoney();
 			}
 		};
 })();
 var member = (function() {
-	var _ssn,_name,_gender,_age;
+	var _age,_gender,_name,_ssn;
+	var setAge = function(age){this._age=age;};
+	var setGender = function(gender){this._gender=gender;};
+	var setName = function(name){this._name=name;};
+	var setSsn = function(ssn){this._ssn=ssn;};
+	var getAge = function(ssn){return this._age;};
+	var getGender = function(ssn){return this._gender;};
+	var getName = function(ssn){return this._name;};
+	var getSsn = function(ssn){return this._ssn;};
 	return {
+		setSsn : setSsn,
+		setName : setName,
+		setAge : setAge,
+		setGender : setGender,
+		getName : getName,
+		getAge : getAge,
+		getSsn : getSsn,
+		getGender : getGender,
 		spec : function(){
-			_ssn=document.querySelector('#ssn').value;
-			_name=document.querySelector('#name').value;
+			setSsn(document.querySelector('#ssn').value);
+			setName(document.querySelector('#name').value);
 			var now = new Date().getFullYear();
-			var ssnArr = _ssn.split("-");
+			var ssnArr = getSsn().split("-");
 			var ageResult1 = ssnArr[0];
 			var genderResult = Number(ssnArr[1]);
 			var ageResult0 = 0;
 			switch (genderResult) {
 			case 1: case 5: 
-				_gender="남"; 
+				setGender("남"); 
 				ageResult0 = now - 1900-(ageResult1/10000);
-				_age = ageResult0.toString().split(".")[0];
+				setAge(ageResult0.toString().split(".")[0]);
 				break;
 			case 3: case 7:
-				_gender="남"; 
+				setGender("남"); 
 				ageResult0 = now - 2000-(ageResult1/10000);
-				_age = ageResult0.toString().split(".")[0];
+				setAge(ageResult0.toString().split(".")[0]);
 				break;
 			case 2: case 6:
-				_gender="여";
+				setGender("여");
 				ageResult0 = now - 1900-(ageResult1/10000);
-				_age = ageResult0.toString().split(".")[0];
+				setAge(ageResult0.toString().split(".")[0]);
 				break;
 			case 4: case 8:
-				_gender="여";
+				setGender("여");
 				ageResult0 = now - 2000-(ageResult1/10000);
-				_age = ageResult0.toString().split(".")[0];
+				setAge(geResult0.toString().split(".")[0]);
 				break;
 
 		}	
-			document.querySelector('#result_name').innerHTML = _name;
-			document.querySelector('#result_age').innerHTML = _age;
-			document.querySelector('#result_gender').innerHTML = _gender;
+			document.querySelector('#result_name').innerHTML = getName();
+			document.querySelector('#result_age').innerHTML = getAge();
+			document.querySelector('#result_gender').innerHTML = getGender();
 			
 		}
 	}
 })();
 var kaup = (function() {
+	var _name,_height,_weight,_result;
+	var setName = function(name){this._name=name;};
+	var setHeight = function(height){this._height=height;};
+	var setWeight = function(weight){this._weight=weight;};
+	var setResult = function(result){this._result=result;};
+	var getName = function(){return this._name;};
+	var getHeight = function(){return this._height;};
+	var getWeight = function(){return this._weight;};
+	var getResult = function(){return this._result;};
 	return{
+		setName : setName,
+		setHeight : setHeight,
+		setWeight : setWeight,
+		setResult : setResult,
+		getName : getName,
+		getHeight : getHeight,
+		getWeight : getWeight,
+		getResult : getResult,
+		calc : function(){
+			setName(document.querySelector('#name').value);
+			setHeight(document.querySelector('#height').value);
+			setWeight(document.querySelector('#weight').value);
+			var kaup = getWeight() / (getHeight()/100) / (getHeight()/100);
+			if (kaup < 18.5) {
+				setResult("저체중");
+			} else if(kaup >= 18.5 && kaup <= 22.9){
+				setResult("정상체중");
+			} else if(kaup >= 23.0 && kaup <= 24.9){
+				setResult("위험체중");
+			} else if(kaup >= 25.0 && kaup <= 29.9){
+				setResult("비만 1단계");
+			} else if(kaup > 30 && kaup < 40){
+				setResult("비만 2단계");
+			} else if(kaup >= 40.0){
+				setResult("비만 3단계");
+			}
+			document.querySelector('#result').innerHTML=getName() +'의 카우푸 결과 :'+ getResult();
+		},
 		init : function() {
 			document.querySelector('#bt_kaup_calc').addEventListener('click',this.calc,false);
-		},
-		calc : function(){
-			alert('카우푸 칼크 클릭');
-			var name = document.querySelector('#name').value;
-			var height = document.getElementById('height').value;
-			var weight = document.getElementById('weight').value;
-			console.log('name'+name);
-			console.log('height'+height);
-			console.log('weight'+weight);
-			var result = '';
-			var kaup = weight / (height/100) / (height/100);
-			if (kaup < 18.5) {
-				result = "저체중";
-			} else if(kaup >= 18.5 && kaup <= 22.9){
-				result = "정상체중";
-			} else if(kaup >= 23.0 && kaup <= 24.9){
-				result = "위험체중";
-			} else if(kaup >= 25.0 && kaup <= 29.9){
-				result = "비만 1단계";
-			} else if(kaup > 30 && kaup < 40){
-				result = "비만 2단계";
-			} else if(kaup >= 40.0){
-				result = "비만 3단계";
-			}
-			document.getElementById('result').innerHTML=name+'의 카우푸 결과 :'+result;
-			/*return name+"은 BMI지수는"+String.format("%.2f", kaup)+"이고"+result+"이다";*/
 		}
 	}
 })();
