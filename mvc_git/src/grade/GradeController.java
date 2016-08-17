@@ -20,14 +20,7 @@ public class GradeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	Seperator.init(request, response);
-	GradeService service = GradeServiceImpl.getInstance();
-	switch (Seperator.command.getAction()) {
-	case "move":break;
-
-	default:
-		break;
-	}
-	DispatcherServlet.send(request, response, Seperator.command);
+		System.out.println("===GradeController===");
+		DispatcherServlet.send(request, response, Seperator.init(request, response));
 	}
 }

@@ -1,24 +1,22 @@
 // var application = (function(){})();  IIFE 패턴
-
-var application = (function(){	
+var application = (function(){
 	var init = function(param) {
-		sessionStorage.setItem('context', param);
+		sessionStorage.setItem('context',param);
 	};
-	var getContext = function() {
+	var getContextPath = function(){
 		return sessionStorage.getItem('context');
 	};
-	var goHome = function(){
-		location.href = this.getContext()+"/home.do";
+	var to_douglas = function() {
+		location.href=getContextPath()+"/douglas.do";
 	};
+	var go_home = function(){
+		location.href=getContextPath()+"/home.do";
+	}
 	return {
-		to_douglas : function() {
-			location.href = getContext()+"/douglas.do";
-		},
-		goHome : goHome,
-		getContext : getContext,
-		init : init
-	};
+		init : init,
+		to_douglas : to_douglas,
+		go_home : go_home
+	}
 })();
-
 
 

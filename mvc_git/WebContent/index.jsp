@@ -4,13 +4,17 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>	
 </head>
 <body>
 	<a href="#" id="atag">홈으로</a>
 </body>
 <script src="resources/js/application.js"></script>
 <script type="text/javascript">
+$(function() {
 	application.init('${context}');
-	application.goHome();
+	application.go_home();
+});
+
 </script>
 </html>    

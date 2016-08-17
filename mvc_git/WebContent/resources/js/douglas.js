@@ -179,8 +179,3 @@ var kaup = (function() {
 		}
 	}
 })();
-/*kaup*/
-
-
-
-/*account*/

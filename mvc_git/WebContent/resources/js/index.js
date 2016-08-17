@@ -1,6 +1,6 @@
-function gohome(context){
+function go_home(context){
 	location.href= context+"/home.do";
 }
 function start(context){
-	document.getElementById('atag').onclick=gohome(context);
+	document.getElementById('atag').onclick=go_home(context);
 }
